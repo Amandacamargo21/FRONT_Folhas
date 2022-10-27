@@ -7,11 +7,19 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./cadastrar-funcionario.component.css"],
 })
 export class CadastrarFuncionarioComponent implements OnInit {
+  numero1: number = 0;
+  numero2: number = 0;
+
   constructor() {}
 
   ngOnInit(): void {}
-  calcular() {
-    alert("Olá Mundo!");
-    console.log("Olá mundo");
+
+  cadastrar(): void {
+    let soma: number = this.numero1 + this.numero2;
+    console.log(soma);
+  }
+
+  teste(): void {
+    alert("oi!");
   }
 }
