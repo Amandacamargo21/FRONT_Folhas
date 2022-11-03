@@ -1,5 +1,7 @@
+import { HttpClient } from "@angular/common/http";
 import { Call } from "@angular/compiler";
 import { Component, OnInit } from "@angular/core";
+import { Funcionario } from "src/app/models/funcionario";
 
 @Component({
   selector: "app-cadastrar-funcionario",
@@ -7,19 +9,40 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./cadastrar-funcionario.component.css"],
 })
 export class CadastrarFuncionarioComponent implements OnInit {
-  numero1: number = 0;
-  numero2: number = 0;
+  nome!: string;
+  cpf!: string;
+  soma!: number;
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {}
 
   cadastrar(): void {
-    let soma: number = this.numero1 + this.numero2;
-    console.log(soma);
-  }
+    let funcionario: Funcionario = {
+      nome: this.nome,
+      cpf: this.cpf,
+      salario: 1500,
+      email: "a@a.com",
+      nascimento: "2022-10-27",
+      criadoEm: "",
+    };
 
-  teste(): void {
-    alert("oi!");
+    this.http
+      .post<Funcionario>(
+        "https://localhost:5001/api/funcionario/cadastrar",
+        funcionario
+      )
+
+      //Executar a requisição
+      .subscribe({
+        next: (funcionario) => {
+          //Executamos o que for necessário quando a requisição for bem sucedida
+          console.log("Gravamos um funcionário", funcionario);
+        },
+        error: (error) => {
+          //Executa o que for necessario quando a requisição for mal sucedida
+          console.log("Deu erro", error);
+        },
+      });
   }
 }
